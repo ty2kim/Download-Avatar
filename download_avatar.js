@@ -9,6 +9,8 @@ require('dotenv').config();
 const dir = './avatars/';
 const root = 'https://api.github.com/repos/';
 
+let args = process.argv.splice(2);
+
 // downloadImageByURL
 function downloadImageByURL(url, filePath) {
   // create folder
@@ -23,6 +25,11 @@ function callback(err, response, body) {
   if (err) {
     throw err;
   } const data = JSON.parse(body); // conver string to object
+
+  if (data.message === 'Not Found') {
+    console.log('Provided owner/repo does not exist');
+    return;
+  }
 
   // iterate through object
   for (let person in data) {
@@ -42,7 +49,15 @@ function getRepoContributors(repoOwner, repoName, cb) {
       'User-Agent': 'ty2kim',
     },
   };
-  request.get(options, cb); // request call
+  request.get(options, cb);
 }
 
-getRepoContributors(process.argv[2], process.argv[3], callback);
+function argumentsCheck(args) {
+  if (args.length != 2) {
+    console.log('Incorrect number of arguments');
+  } else {
+    getRepoContributors(args[0], args[1], callback);
+  }
+}
+
+argumentsCheck(args);

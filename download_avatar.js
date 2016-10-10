@@ -3,6 +3,7 @@
 // import modules
 const request = require('request');
 const fs = require('fs');
+require('dotenv').config();
 
 // directory name
 const dir = './avatars/';
@@ -34,6 +35,9 @@ function getRepoContributors(repoOwner, repoName, cb) {
   // https://api.github.com/repos/lighthouse-labs/laser_shark/contributors
   const options = {
     url: `${root}${repoOwner}/${repoName}/contributors`,
+    auth: {
+      bearer: process.env.DB_TOKEN,
+    },
     headers: {
       'User-Agent': 'ty2kim',
     },

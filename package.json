@@ -9,6 +9,7 @@
   "author": "TAE YOUNG KIM",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^2.0.0",
     "request": "^2.75.0"
   }
 }

@@ -6,14 +6,7 @@ const fs = require('fs');
 
 // directory name
 const dir = './avatars/';
-
-// url with user-agent
-const options = {
-  url: '',
-  headers: {
-    'User-Agent': 'ty2kim',
-  },
-};
+const root = 'https://api.github.com/repos/';
 
 // downloadImageByURL
 function downloadImageByURL(url, filePath) {
@@ -39,8 +32,13 @@ function callback(err, response, body) {
 // getRepoContributors
 function getRepoContributors(repoOwner, repoName, cb) {
   // https://api.github.com/repos/lighthouse-labs/laser_shark/contributors
-  options.url = 'https://api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors'; // update url to github api
-  request(options, cb); // request call
+  const options = {
+    url: `${root}${repoOwner}/${repoName}/contributors`,
+    headers: {
+      'User-Agent': 'ty2kim',
+    },
+  };
+  request.get(options, cb); // request call
 }
 
 getRepoContributors(process.argv[2], process.argv[3], callback);

@@ -1,0 +1,14 @@
+{
+  "name": "download_avatars",
+  "version": "1.0.0",
+  "description": "Given a GitHub repository name (and owner), download all the contributors' profile images and save them to a subdirectory, avatars/.",
+  "main": "download_avatar.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TAE YOUNG KIM",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.75.0"
+  }
+}

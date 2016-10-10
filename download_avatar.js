@@ -1,10 +1,8 @@
-// https://api.github.com/repos/lighthouse-labs/laser_shark/contributors
-
 'use strict';
 
 // import modules
-let request = require('request');
-let fs = require('fs');
+const request = require('request');
+const fs = require('fs');
 
 // directory name
 const dir = './avatars/';
@@ -33,13 +31,14 @@ function callback(err, response, body) {
   } const data = JSON.parse(body); // conver string to object
 
   // iterate through object
-  for (person in data) {
+  for (let person in data) {
     downloadImageByURL(data[person].avatar_url, 'avatars/' + data[person].login + '.png');
   }
 }
 
 // getRepoContributors
 function getRepoContributors(repoOwner, repoName, cb) {
+  // https://api.github.com/repos/lighthouse-labs/laser_shark/contributors
   options.url = 'https://api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors'; // update url to github api
   request(options, cb); // request call
 }

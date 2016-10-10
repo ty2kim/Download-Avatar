@@ -3,7 +3,9 @@
 // import modules
 const request = require('request');
 const fs = require('fs');
-require('dotenv').config();
+//const env = require('dotenv').config();
+
+
 
 // directory name
 const dir = './avatars/';
@@ -52,12 +54,15 @@ function getRepoContributors(repoOwner, repoName, cb) {
   request.get(options, cb);
 }
 
-function argumentsCheck(args) {
+function run(args) {
   if (args.length != 2) {
     console.log('Incorrect number of arguments');
+  } else if (!fs.existsSync('.env')) {
+    console.log('.env file is missing');
   } else {
+    let env = require('dotenv').config();
     getRepoContributors(args[0], args[1], callback);
   }
 }
 
-argumentsCheck(args);
+run(args);

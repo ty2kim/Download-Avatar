@@ -3,9 +3,6 @@
 // import modules
 const request = require('request');
 const fs = require('fs');
-//const env = require('dotenv').config();
-
-
 
 // directory name
 const dir = './avatars/';
@@ -21,8 +18,7 @@ function downloadImageByURL(url, filePath) {
   } request(url).pipe(fs.createWriteStream(filePath)); // download avatar to specified folder
 }
 
-// callback
-function callback(err, response, body) {
+function repoContCb(err, response, body) {
   // error handling
   if (err) {
     throw err;
@@ -33,7 +29,6 @@ function callback(err, response, body) {
     return;
   }
 
-  // iterate through object
   for (let person in data) {
     downloadImageByURL(data[person].avatar_url, 'avatars/' + data[person].login + '.png');
   }
@@ -61,7 +56,7 @@ function run(args) {
     console.log('.env file is missing');
   } else {
     let env = require('dotenv').config();
-    getRepoContributors(args[0], args[1], callback);
+    getRepoContributors(args[0], args[1], repoContCb);
   }
 }
 

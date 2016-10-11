@@ -8,7 +8,10 @@ const fs = require('fs');
 const dir = './avatars/';
 const root = 'https://api.github.com/';
 
+// taking arguments
 let args = process.argv.splice(2);
+
+// starred repo information
 let storage = {};
 
 // downloadImageByURL
@@ -16,9 +19,12 @@ function downloadImageByURL(url, filePath) {
   // create folder
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
-  } request(url).pipe(fs.createWriteStream(filePath)); // download avatar to specified folder
+  }
+
+  request(url).pipe(fs.createWriteStream(filePath)); // download avatar to specified folder
 }
 
+// getFiveRecomRepo
 function getFiveRecomRepo(login) {
   const options = {
     url: `${root}users/${login}/starred`,
@@ -29,11 +35,14 @@ function getFiveRecomRepo(login) {
       'User-Agent': 'ty2kim',
     },
   };
+
+  // request to starred_url
   request.get(options, function (err, response, body) {
     if (err) {
       throw err;
     } const data = JSON.parse(body);
 
+    // update storage with starred repos info
     for (let person in data) {
       let repoOwner = data[person].owner.login;
       let repoName = data[person].name;
@@ -79,6 +88,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
   request.get(options, cb);
 }
 
+// run
 function run(args) {
   if (args.length != 2) {
     console.log('Incorrect number of arguments');
@@ -91,6 +101,8 @@ function run(args) {
 }
 
 run(args);
+
+// get 5 top starred repos
 setTimeout(function () {
   var rank = [];
   for (let pair in storage) {

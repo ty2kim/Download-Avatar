@@ -10,7 +10,6 @@ const root = 'https://api.github.com/';
 
 let args = process.argv.splice(2);
 let storage = {};
-//let starredInfo = [];
 
 // downloadImageByURL
 function downloadImageByURL(url, filePath) {
@@ -96,9 +95,12 @@ setTimeout(function () {
   var rank = [];
   for (let pair in storage) {
     rank.push(storage[pair]);
-    rank.sort(function(a,b){
+    rank.sort(function (a, b) {
       return b[1] - a[1];
     });
   }
-  console.log(rank);
+
+  for (let i = 0; i < 5; i++) {
+    console.log(`[ ${rank[i][1]} stars ] ${rank[i][0]}`);
+  }
 }, 5000);
